@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🏍️ RideHub | Modern Bike Rentals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #4cc9f0;
+            --accent: #f72585;
+            --light: #ffffff;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #f8f9fa;
+            --success: #4ade80;
+            --warning: #facc15;
+            --danger: #f87171;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.75rem;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius);
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .cta-button:hover {
+            background: #e11570;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(67, 97, 238, 0.9), rgba(58, 86, 212, 0.9)), url('https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-highlight {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .pricing-highlight h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .price-note {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section {
+                padding: 2rem 0;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .booking-section {
+                padding: 2rem 1rem;
+            }
+
+            .testimonials {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* How It Works */
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .step-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .step-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--primary);
+            font-size: 1.75rem;
+        }
+
+        .step-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        /* Bike Showcase */
+        .bike-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .bike-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .bike-card {
+                max-width: 100%;
+            }
+            
+            .bike-image {
+                height: 180px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .bike-content {
+                padding: 1rem;
+            }
+            
+            .bike-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .pricing-options {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        .bike-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .bike-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .bike-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .bike-content {
+            padding: 1.5rem;
+        }
+
+        .bike-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .bike-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .bike-badge {
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .bike-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-option {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            border-radius: var(--radius);
+            border: 1px solid #e9ecef;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pricing-option:hover, .pricing-option.active {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.05);
+        }
+
+        .pricing-option h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .duration {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        /* Collapsible Section Styles */
+        .collapsible-section {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin: 2rem 0;
+            overflow: hidden;
+            display: none; /* Hidden by default */
+        }
+
+        .collapsible-section.visible {
+            display: block; /* Show when visible class is added */
+        }
+
+        .collapsible-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .collapsible-header:hover {
+            background: var(--primary-dark);
+        }
+
+        .collapsible-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible-content {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .collapsible-content.open {
+            padding: 1.5rem;
+            max-height: 1000px;
+        }
+
+        .collapsible-icon.rotated {
+            transform: rotate(180deg);
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Booking Form */
+        .booking-form {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h2 {
+            color: var(--primary);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .booking-form {
+                padding: 1.5rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+                max-height: 90vh;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .form-control {
+                padding: 0.6rem;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            
+            .hours-input input {
+                width: 70px;
+            }
+            
+            .cta-button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .modal-content {
+                padding: 1rem;
+                margin: 10px;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+            border-radius: var(--radius);
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .hours-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hours-input input {
+            width: 80px;
+        }
+
+        .hours-input span {
+            color: var(--gray);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        /* Footer responsive */
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .copyright {
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            position: relative;
+            animation: modalAppear 0.3s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalAppear {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--dark);
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        /* Loading Spinner */
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 101;
+        }
+
+        .mobile-menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 10px;
+            transition: all 0.3s linear;
+            position: relative;
+            transform-origin: center;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                flex-direction: column;
+                background: var(--primary);
+                width: 70%;
+                height: 100vh;
+                padding: 80px 20px 20px;
+                transition: left 0.3s ease;
+                box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+                z-index: 100;
+            }
+
+            nav ul.active {
+                left: 0;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+                width: 100%;
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 15px;
+                text-align: center;
+                border-radius: var(--radius);
+            }
+        }
+        
+        /* Footer responsive */
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .copyright {
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-motorcycle"></i>
+                <span>RIDEHUB</span>
+            </div>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-biking"></i> Bikes</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                    <li><a href="#"><i class="fas fa-phone"></i> Contact</a></li>
+                </ul>
+            </nav>
+            <button class="cta-button" id="bookNowBtn">
+                <i class="fas fa-calendar-check"></i> Book Now
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Freedom on Two Wheels</h1>
+            <p>Experience the thrill of riding with our premium bike rental service. Flexible hourly rates starting at just ₹100 for 3 hours!</p>
+            
+            <div class="pricing-highlight">
+                <h2>Special Hourly Offer</h2>
+                <div class="price-tag">₹100 <span style="font-size: 1.5rem;">/ hour</span></div>
+                <p class="price-note">Minimum 3 hours booking required</p>
+                <button class="cta-button" style="margin-top: 1rem;">
+                    <i class="fas fa-bolt"></i> Book Hourly Ride
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bike Showcase -->
+    <section class="section" style="background: var(--light-gray);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Premium Fleet</h2>
+                <p>Choose from our carefully curated selection of bikes, all maintained to perfection.</p>
+            </div>
+            
+            <div class="bike-grid">
+                <!-- Royal Enfield Electra 350 -->
+                <div class="bike-card">
+                    <img src="https://www.carandbike.com/_next/image?url=https%3A%2F%2Fimages.carandbike.com%2Fbike-images%2Flarge%2Froyal-enfield%2Fbullet-electra%2Froyal-enfield-bullet-electra.jpg%3Fv%3D6&w=1600&q=75" alt="Royal Enfield Electra 350" class="bike-image">
+                    <div class="bike-content">
+                        <div class="bike-header">
+                            <h3 class="bike-title">Royal Enfield Electra 350</h3>
+                            <span class="bike-badge">Most Popular</span>
+                        </div>
+                        <p class="bike-description">Classic cruiser for the ultimate riding experience</p>
+                        
+                        <div class="pricing-options">
+                            <div class="pricing-option active">
+                                <h4>Hourly</h4>
+                                <div class="price">₹100</div>
+                                <div class="duration">per hour</div>
+                            </div>
+                            <div class="pricing-option">
+                                <h4>12 Hours</h4>
+                                <div class="price">₹1200</div>
+                                <div class="duration">fixed rate</div>
+                            </div>
+                        </div>
+                        
+                        <button class="cta-button book-bike" data-bike="Royal Enfield Electra 350">
+                            <i class="fas fa-calendar-plus"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- NS Pulsar 125 -->
+                <div class="bike-card">
+                    <img src="https://cdn.bajajauto.com/-/media/assets/bajajauto/360degreeimages/bikes/pulsar/pulsar-ns125-new/black/black-web/00.png" alt="NS Pulsar 125" class="bike-image">
+                    <div class="bike-content">
+                        <div class="bike-header">
+                            <h3 class="bike-title">NS Pulsar 125</h3>
+                            <span class="bike-badge">Economy</span>
+                        </div>
+                        <p class="bike-description">Sporty and efficient for city rides</p>
+                        
+                        <div class="pricing-options">
+                            <div class="pricing-option active">
+                                <h4>Hourly</h4>
+                                <div class="price">₹100</div>
+                                <div class="duration">per hour</div>
+                            </div>
+                            <div class="pricing-option">
+                                <h4>12 Hours</h4>
+                                <div class="price">₹800</div>
+                                <div class="duration">fixed rate</div>
+                            </div>
+                        </div>
+                        
+                        <button class="cta-button book-bike" data-bike="NS Pulsar 125">
+                            <i class="fas fa-calendar-plus"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Pulsar 225 -->
+                <div class="bike-card">
+                    <img src="https://imgd.aeplcdn.com/664x374/bw/models/bajaj-pulsar-220f-bs-vi20200211172259.jpg?q=80" alt="Pulsar 225" class="bike-image">
+                    <div class="bike-content">
+                        <div class="bike-header">
+                            <h3 class="bike-title">Pulsar 225</h3>
+                            <span class="bike-badge">Performance</span>
+                        </div>
+                        <p class="bike-description">Powerful sports bike for enthusiasts</p>
+                        
+                        <div class="pricing-options">
+                            <div class="pricing-option active">
+                                <h4>Hourly</h4>
+                                <div class="price">₹100</div>
+                                <div class="duration">per hour</div>
+                            </div>
+                            <div class="pricing-option">
+                                <h4>12 Hours</h4>
+                                <div class="price">₹800</div>
+                                <div class="duration">fixed rate</div>
+                            </div>
+                        </div>
+                        
+                        <button class="cta-button book-bike" data-bike="Pulsar 225">
+                            <i class="fas fa-calendar-plus"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Honda Activa -->
+                <div class="bike-card">
+                    <img src="https://img.indianautosblog.com/2023/09/28/activa-limited-edition-matte-steel-black-metallic-2624.jpg" alt="Honda Activa" class="bike-image">
+                    <div class="bike-content">
+                        <div class="bike-header">
+                            <h3 class="bike-title">Honda Activa</h3>
+                            <span class="bike-badge">Scooter</span>
+                        </div>
+                        <p class="bike-description">Comfortable and fuel-efficient scooter for daily commuting</p>
+                        
+                        <div class="pricing-options">
+                            <div class="pricing-option active">
+                                <h4>Hourly</h4>
+                                <div class="price">₹100</div>
+                                <div class="duration">per hour</div>
+                            </div>
+                            <div class="pricing-option">
+                                <h4>12 Hours</h4>
+                                <div class="price">₹600</div>
+                                <div class="duration">fixed rate</div>
+                            </div>
+                        </div>
+                        
+                        <button class="cta-button book-bike" data-bike="Honda Activa">
+                            <i class="fas fa-calendar-plus"></i> Book Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Renting a bike has never been easier. Follow these simple steps to get started.</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="fas fa-motorcycle"></i>
+                    </div>
+                    <h3>Choose Your Bike</h3>
+                    <p>Browse our fleet of premium bikes and select the one that suits your needs.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Select Duration</h3>
+                    <p>Choose between 12-hour fixed rate or flexible hourly pricing starting at ₹100/hour.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Book & Confirm</h3>
+                    <p>Provide your details and confirm your booking in just a few clicks.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3>Ride Away</h3>
+                    <p>We'll deliver your bike and you're ready to explore!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>RIDEHUB</h3>
+                    <p>Your trusted partner for premium bike rentals with flexible hourly pricing options.</p>
+                    
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Bikes</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Hourly Rates</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> +91 79740 88441</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 RideHub Bike Rentals. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Quick Booking Modal -->
+    <div class="modal" id="quickBookingModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="booking-form">
+                <div class="form-header">
+                    <h2><i class="fas fa-calendar-alt"></i> Quick Booking</h2>
+                    <p>Book your ride in seconds with our simple form</p>
+                </div>
+                
+                <form id="quickBookingForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="bikeSelect">Select Bike</label>
+                            <select id="bikeSelect" class="form-control" required>
+                                <option value="">Choose a bike</option>
+                                <option value="Royal Enfield Electra 350">Royal Enfield Electra 350</option>
+                                <option value="NS Pulsar 125">NS Pulsar 125</option>
+                                <option value="Pulsar 225">Pulsar 225</option>
+                                <option value="Honda Activa">Honda Activa</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="rentalType">Rental Type</label>
+                            <select id="rentalType" class="form-control" required>
+                                <option value="hourly">Hourly (₹100/hour, 3 hrs min)</option>
+                                <option value="12hours">12 Hours (Fixed Rate)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="hoursGroup">
+                        <label for="hours">Number of Hours</label>
+                        <div class="hours-input">
+                            <input type="number" id="hours" class="form-control" min="3" value="3" required>
+                            <span>hours (minimum 3)</span>
+                        </div>
+                        <div class="form-note" style="font-size: 0.85rem; color: var(--accent); margin-top: 0.5rem;">
+                            <i class="fas fa-info-circle"></i> Minimum booking period is 3 hours at ₹100/hour
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="pickupDate">Pickup Date</label>
+                            <input type="date" id="pickupDate" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pickupTime">Pickup Time</label>
+                            <input type="time" id="pickupTime" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="userName">Your Name</label>
+                            <input type="text" id="userName" class="form-control" placeholder="Full name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="userPhone">Phone Number</label>
+                            <input type="tel" id="userPhone" class="form-control" placeholder="Mobile number" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="userEmail">Email Address</label>
+                            <input type="email" id="userEmail" class="form-control" placeholder="Email address" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Special Requests (Optional)</label>
+                        <textarea id="message" class="form-control" rows="3" placeholder="Any special requirements or notes"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="cta-button" style="width: 100%; margin-top: 1rem;">
+                        <i class="fas fa-paper-plane"></i> Submit Booking Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Confirmation Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="booking-form">
+                <div class="form-header">
+                    <h2><i class="fas fa-calendar-check"></i> Confirm Your Booking</h2>
+                    <p>Review your booking details before submitting</p>
+                </div>
+                
+                <div class="form-group">
+                    <label>Bike Model</label>
+                    <div id="modalBikeModel" class="form-control" style="background: #f8f9fa; font-weight: 600;"></div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Rental Type</label>
+                        <div id="modalRentalType" class="form-control" style="background: #f8f9fa;"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <div id="modalDuration" class="form-control" style="background: #f8f9fa;"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Pickup Date</label>
+                    <div id="modalPickupDate" class="form-control" style="background: #f8f9fa;"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Your Details</label>
+                    <div class="form-control" style="background: #f8f9fa; height: auto;">
+                        <div><strong>Name:</strong> <span id="modalName">Not provided</span></div>
+                        <div><strong>Phone:</strong> <span id="modalPhone">Not provided</span></div>
+                        <div><strong>Email:</strong> <span id="modalEmail">Not provided</span></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <button id="confirmBooking" class="cta-button" style="width: 48%; float: left; margin-right: 4%;">
+                        <i class="fas fa-check-circle"></i> Confirm
+                    </button>
+                    <button id="editBooking" class="cta-button" style="width: 48%; background: var(--gray);" type="button">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeSuccessModal">&times;</span>
+            <div class="success-message">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Booking Confirmed!</h2>
+                <p>Thank you for your booking. We'll contact you shortly to confirm the details.</p>
+                <p>A confirmation has been sent to your email.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Booking Details Section -->
+    <section class="section" id="userBookingSection" style="display: none;">
+        <div class="container">
+            <div class="collapsible-section">
+                <div class="collapsible-header">
+                    <span><i class="fas fa-user-circle"></i> Your Booking Details</span>
+                </div>
+                <div class="collapsible-content open">
+                    <div class="booking-form">
+                        <div class="form-header">
+                            <h2>Your Booking Information</h2>
+                            <p>Here are the details of your bike rental booking</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Bike Model</label>
+                            <div id="userBikeModel" class="form-control" style="background: #f8f9fa; font-weight: 600;"></div>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Rental Type</label>
+                                <div id="userRentalType" class="form-control" style="background: #f8f9fa;"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Duration</label>
+                                <div id="userDuration" class="form-control" style="background: #f8f9fa;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Pickup Date & Time</label>
+                            <div id="userPickupDateTime" class="form-control" style="background: #f8f9fa;"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Your Details</label>
+                            <div class="form-control" style="background: #f8f9fa; height: auto;">
+                                <div><strong>Name:</strong> <span id="userNameDisplay"></span></div>
+                                <div><strong>Phone:</strong> <span id="userPhoneDisplay"></span></div>
+                                <div><strong>Email:</strong> <span id="userEmailDisplay"></span></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button id="closeUserBooking" class="cta-button" style="width: 100%;">
+                                <i class="fas fa-times"></i> Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 9999; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 2rem; border-radius: var(--radius); text-align: center;">
+            <div class="spinner" style="border: 4px solid rgba(0, 0, 0, 0.1); border-left-color: var(--primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
+            <p>Saving your booking...</p>
+        </div>
+    </div>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDfRrdduu5KMEiZCj_JMnaoh-kmOE2oZNc",
+          authDomain: "ss-mart-ef1d4.firebaseapp.com",
+          databaseURL: "https://ss-mart-ef1d4-default-rtdb.firebaseio.com",
+          projectId: "ss-mart-ef1d4",
+          storageBucket: "ss-mart-ef1d4.firebasestorage.app",
+          messagingSenderId: "643797105634",
+          appId: "1:643797105634:web:646eb33c3535de12f617bb",
+          measurementId: "G-M7KXYDKGX5"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Set today's date as default for pickup date
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('pickupDate').value = today;
+            
+            // Set default pickup time to current time + 1 hour
+            const now = new Date();
+            now.setHours(now.getHours() + 1);
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('pickupTime').value = `${hours}:${minutes}`;
+            
+            // Initialize modal functionality
+            initializeModals();
+        });
+        
+        // Function to initialize modal functionality
+        function initializeModals() {
+            // Get modal elements
+            const quickBookingModal = document.getElementById('quickBookingModal');
+            const bookingModal = document.getElementById('bookingModal');
+            const successModal = document.getElementById('successModal');
+            
+            // Get button that opens the quick booking modal
+            const bookNowBtn = document.getElementById('bookNowBtn');
+            
+            // Get close buttons
+            const closeButtons = document.querySelectorAll('.close-modal');
+            const closeSuccessModal = document.getElementById('closeSuccessModal');
+            
+            // Get edit booking button
+            const editBookingBtn = document.getElementById('editBooking');
+            
+            // When the user clicks the book now button, open the quick booking modal
+            bookNowBtn.addEventListener('click', function() {
+                // Reset form when opening
+                document.getElementById('quickBookingForm').reset();
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('pickupDate').value = today;
+                
+                // Set default pickup time to current time + 1 hour
+                const now = new Date();
+                now.setHours(now.getHours() + 1);
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                document.getElementById('pickupTime').value = `${hours}:${minutes}`;
+                
+                quickBookingModal.style.display = 'flex';
+            });
+            
+            // When the user clicks on book bike buttons, open the quick booking modal
+            document.querySelectorAll('.book-bike').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Pre-select the bike in the quick booking form
+                    const bikeName = this.getAttribute('data-bike');
+                    document.getElementById('bikeSelect').value = bikeName;
+                    
+                    // Reset form when opening
+                    document.getElementById('quickBookingForm').reset();
+                    const today = new Date().toISOString().split('T')[0];
+                    document.getElementById('pickupDate').value = today;
+                    document.getElementById('bikeSelect').value = bikeName;
+                    
+                    // Set default pickup time to current time + 1 hour
+                    const now = new Date();
+                    now.setHours(now.getHours() + 1);
+                    const hours = now.getHours().toString().padStart(2, '0');
+                    const minutes = now.getMinutes().toString().padStart(2, '0');
+                    document.getElementById('pickupTime').value = `${hours}:${minutes}`;
+                    
+                    quickBookingModal.style.display = 'flex';
+                });
+            });
+            
+            // When the user submits the quick booking form, show the booking confirmation modal
+            document.getElementById('quickBookingForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const bikeModel = document.getElementById('bikeSelect').value;
+                const rentalType = document.getElementById('rentalType').value;
+                const hours = document.getElementById('hours').value;
+                const pickupDate = document.getElementById('pickupDate').value;
+                const pickupTime = document.getElementById('pickupTime').value;
+                const name = document.getElementById('userName').value;
+                const phone = document.getElementById('userPhone').value;
+                const email = document.getElementById('userEmail').value;
+                
+                // Format time with AM/PM
+                const timeParts = pickupTime.split(':');
+                let hoursInt = parseInt(timeParts[0]);
+                const minutes = timeParts[1];
+                const ampm = hoursInt >= 12 ? 'PM' : 'AM';
+                hoursInt = hoursInt % 12;
+                hoursInt = hoursInt ? hoursInt : 12; // Convert 0 to 12
+                const formattedTime = `${hoursInt}:${minutes} ${ampm}`;
+                
+                // Format the date
+                const formattedDate = new Date(pickupDate).toLocaleDateString();
+                
+                // Update confirmation modal with form values
+                document.getElementById('modalBikeModel').textContent = bikeModel || 'Not specified';
+                
+                if (rentalType === 'hourly') {
+                    document.getElementById('modalRentalType').textContent = 'Hourly';
+                    document.getElementById('modalDuration').textContent = hours + ' hours (₹100/hour)';
+                } else {
+                    document.getElementById('modalRentalType').textContent = '12 Hours';
+                    document.getElementById('modalDuration').textContent = '12 hours (Fixed Rate)';
+                }
+                
+                document.getElementById('modalPickupDate').textContent = formattedDate + ' at ' + formattedTime;
+                document.getElementById('modalName').textContent = name;
+                document.getElementById('modalPhone').textContent = phone;
+                document.getElementById('modalEmail').textContent = email;
+                
+                // Close quick booking modal and open booking confirmation modal
+                quickBookingModal.style.display = 'none';
+                bookingModal.style.display = 'flex';
+            });
+            
+            // When the user clicks confirm booking, show success modal
+            document.getElementById('confirmBooking').addEventListener('click', function() {
+                // Show loading spinner
+                document.getElementById('loadingSpinner').style.display = 'flex';
+                
+                // Get booking details
+                const bikeModel = document.getElementById('modalBikeModel').textContent;
+                const rentalType = document.getElementById('modalRentalType').textContent;
+                const duration = document.getElementById('modalDuration').textContent;
+                const pickupDate = document.getElementById('modalPickupDate').textContent;
+                const name = document.getElementById('modalName').textContent;
+                const phone = document.getElementById('modalPhone').textContent;
+                const email = document.getElementById('modalEmail').textContent;
+                
+                // Create booking object
+                const bookingData = {
+                    bikeModel: bikeModel,
+                    rentalType: rentalType,
+                    duration: duration,
+                    pickupDate: pickupDate,
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                };
+                
+                // Save booking to Firebase
+                const bookingsRef = database.ref('bikeBookings');
+                const newBookingRef = bookingsRef.push();
+                newBookingRef.set(bookingData)
+                    .then(() => {
+                        // Hide loading spinner
+                        document.getElementById('loadingSpinner').style.display = 'none';
+                        
+                        // Create WhatsApp message for admin
+                        const adminMessage = `Hello, I'm ${name}. I've booked a bike with RideHub.
+
+Booking Details:
+Bike: ${bikeModel}
+Rental Type: ${rentalType}
+Duration: ${duration}
+Pickup Date & Time: ${pickupDate}
+
+Customer Details:
+Name: ${name}
+Phone: ${phone}
+Email: ${email}
+
+Please confirm my booking.`;
+                        
+                        // Create WhatsApp message for user
+                        const userMessage = `Hello ${name}, your bike booking with RideHub is confirmed!
+
+Booking Details:
+Bike: ${bikeModel}
+Rental Type: ${rentalType}
+Duration: ${duration}
+Pickup Date & Time: ${pickupDate}
+
+Our team will contact you shortly to confirm the details. 
+Thank you for choosing RideHub!`;
+                        
+                        // Encode messages for URL
+                        const encodedAdminMessage = encodeURIComponent(adminMessage);
+                        const encodedUserMessage = encodeURIComponent(userMessage);
+                        
+                        // WhatsApp API links (using wa.me)
+                        const adminWhatsappUrl = `https://wa.me/917974088441?text=${encodedAdminMessage}`;
+                        const userWhatsappUrl = `https://wa.me/91${phone.replace(/\D/g, '')}?text=${encodedUserMessage}`;
+                        
+                        // Open WhatsApp for admin in new tab
+                        window.open(adminWhatsappUrl, '_blank');
+                        
+                        // Open WhatsApp for user in new tab (after a short delay to avoid popup blocking)
+                        setTimeout(function() {
+                            window.open(userWhatsappUrl, '_blank');
+                        }, 1000);
+                        
+                        // Update user booking details section
+                        document.getElementById('userBikeModel').textContent = bikeModel;
+                        document.getElementById('userRentalType').textContent = rentalType;
+                        document.getElementById('userDuration').textContent = duration;
+                        document.getElementById('userPickupDateTime').textContent = pickupDate;
+                        document.getElementById('userNameDisplay').textContent = name;
+                        document.getElementById('userPhoneDisplay').textContent = phone;
+                        document.getElementById('userEmailDisplay').textContent = email;
+                        
+                        // Show user booking details section
+                        document.getElementById('userBookingSection').style.display = 'block';
+                        
+                        // Close booking modal and open success modal
+                        bookingModal.style.display = 'none';
+                        successModal.style.display = 'flex';
+                        
+                        // Automatically close success modal after 3 seconds and reset forms
+                        setTimeout(function() {
+                            successModal.style.display = 'none';
+                            document.getElementById('quickBookingForm').reset();
+                            const today = new Date().toISOString().split('T')[0];
+                            document.getElementById('pickupDate').value = today;
+                            
+                            // Set default pickup time to current time + 1 hour
+                            const now = new Date();
+                            now.setHours(now.getHours() + 1);
+                            const hours = now.getHours().toString().padStart(2, '0');
+                            const minutes = now.getMinutes().toString().padStart(2, '0');
+                            document.getElementById('pickupTime').value = `${hours}:${minutes}`;
+                        }, 3000);
+                    })
+                    .catch((error) => {
+                        // Hide loading spinner
+                        document.getElementById('loadingSpinner').style.display = 'none';
+                        
+                        console.error('Error saving booking to Firebase:', error);
+                        alert('There was an error saving your booking. Please try again.');
+                    });
+            });
+            
+            // Handle close user booking section
+            document.getElementById('closeUserBooking').addEventListener('click', function() {
+                document.getElementById('userBookingSection').style.display = 'none';
+            });
+            
+            // When the user clicks edit booking, go back to quick booking modal
+            editBookingBtn.addEventListener('click', function() {
+                bookingModal.style.display = 'none';
+                quickBookingModal.style.display = 'flex';
+            });
+            
+            // When the user clicks on close buttons, close the modals
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    modal.style.display = 'none';
+                    document.getElementById('quickBookingForm').reset();
+                    const today = new Date().toISOString().split('T')[0];
+                    document.getElementById('pickupDate').value = today;
+                    
+                    // Set default pickup time to current time + 1 hour
+                    const now = new Date();
+                    now.setHours(now.getHours() + 1);
+                    const hours = now.getHours().toString().padStart(2, '0');
+                    const minutes = now.getMinutes().toString().padStart(2, '0');
+                    document.getElementById('pickupTime').value = `${hours}:${minutes}`;
+                });
+            });
+            
+            closeSuccessModal.addEventListener('click', function() {
+                successModal.style.display = 'none';
+                document.getElementById('quickBookingForm').reset();
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('pickupDate').value = today;
+                
+                // Set default pickup time to current time + 1 hour
+                const now = new Date();
+                now.setHours(now.getHours() + 1);
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                document.getElementById('pickupTime').value = `${hours}:${minutes}`;
+            });
+            
+            // When the user clicks anywhere outside of the modal, close it
+            window.addEventListener('click', function(event) {
+                if (event.target === quickBookingModal) {
+                    quickBookingModal.style.display = 'none';
+                    document.getElementById('quickBookingForm').reset();
+                    const today = new Date().toISOString().split('T')[0];
+                    document.getElementById('pickupDate').value = today;
+                    
+                    // Set default pickup time to current time + 1 hour
+                    const now = new Date();
+                    now.setHours(now.getHours() + 1);
+                    const hours = now.getHours().toString().padStart(2, '0');
+                    const minutes = now.getMinutes().toString().padStart(2, '0');
+                    document.getElementById('pickupTime').value = `${hours}:${minutes}`;
+                }
+                if (event.target === bookingModal) {
+                    bookingModal.style.display = 'none';
+                }
+                if (event.target === successModal) {
+                    successModal.style.display = 'none';
+                }
+            });
+        }
+        
+        // Handle pricing option selection
+        document.querySelectorAll('.pricing-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const parent = this.closest('.bike-content');
+                parent.querySelectorAll('.pricing-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // Handle rental type change to show/hide hours input
+        document.getElementById('rentalType').addEventListener('change', function() {
+            const hoursGroup = document.getElementById('hoursGroup');
+            if (this.value === 'hourly') {
+                hoursGroup.style.display = 'block';
+            } else {
+                hoursGroup.style.display = 'none';
+            }
+        });
+        
+        // Mobile menu toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            const navUl = document.querySelector('nav ul');
+            navUl.classList.toggle('active');
+            
+            // Animate hamburger to X
+            const spans = this.querySelectorAll('span');
+            if (navUl.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navUl = document.querySelector('nav ul');
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            
+            if (navUl.classList.contains('active') && 
+                !navUl.contains(event.target) && 
+                !mobileMenuToggle.contains(event.target)) {
+                navUl.classList.remove('active');
+                
+                // Reset hamburger icon
+                const spans = mobileMenuToggle.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+    </script>
+</body>
+</body>

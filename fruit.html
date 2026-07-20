@@ -1,0 +1,3575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Wala - Fresh Fruits Delivery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        /* All the existing CSS styles remain the same */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #00b894;
+            --primary-dark: #009975;
+            --primary-light: #80e6d0;
+            --secondary: #fdcb6e;
+            --secondary-dark: #f0b44a;
+            --accent: #e17055;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --gray: #dfe6e9;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --card-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            --card-shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.12);
+            --smooth-transition: all 0.3s ease;
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            --gradient-secondary: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            --gradient-hero: linear-gradient(135deg, rgba(0, 184, 148, 0.9), rgba(253, 203, 110, 0.8));
+        }
+
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+            color: var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .delivery-tag {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .location-selector {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background: var(--light);
+            transition: var(--smooth-transition);
+        }
+
+        .location-selector:hover {
+            background: var(--gray);
+        }
+
+        .location-selector i {
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-actions a {
+            color: var(--dark);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 14px;
+            transition: var(--smooth-transition);
+            position: relative;
+        }
+
+        .header-actions a:hover {
+            color: var(--primary);
+        }
+
+        .header-actions i {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--gradient-primary);
+            padding: 12px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .nav-links::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .nav-links::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            white-space: nowrap;
+            transition: var(--smooth-transition);
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-hero), url('https://images.unsplash.com/photo-1619566636858-adf3ef46400b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 25px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--secondary);
+            color: var(--dark);
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--smooth-transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            background: var(--secondary-dark);
+        }
+
+        /* Products Section */
+        .products-section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: var(--dark);
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-primary);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--smooth-transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--gray);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--smooth-transition);
+        }
+
+        .quantity-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .add-to-cart-btn {
+            padding: 10px 20px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--smooth-transition);
+        }
+
+        .add-to-cart-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Cart Section */
+        .cart-section {
+            padding: 80px 0;
+            background: linear-gradient(to bottom, #f1f9f7, #e3f4f1);
+            display: none;
+        }
+
+        .cart-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .cart-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .cart-items {
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .cart-item img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            margin-right: 15px;
+            padding: 5px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .cart-item-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .cart-item-total {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 18px;
+        }
+
+        .remove-item {
+            color: var(--danger);
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: var(--smooth-transition);
+        }
+
+        .remove-item:hover {
+            transform: scale(1.2);
+        }
+
+        .cart-summary {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .cart-summary h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--dark);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 8px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid var(--gray);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .total-amount {
+            color: var(--primary);
+        }
+
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: var(--smooth-transition);
+        }
+
+        .checkout-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Track Order Section */
+        .track-order-section {
+            padding: 80px 0;
+            background: linear-gradient(to bottom, #f1f9f7, #e3f4f1);
+            display: none;
+        }
+
+        .track-order-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .track-order-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .track-order-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .order-id-input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--gray);
+            border-radius: 30px;
+            font-size: 16px;
+        }
+
+        .order-id-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 184, 148, 0.2);
+        }
+
+        .track-order-btn {
+            padding: 12px 30px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--smooth-transition);
+        }
+
+        .track-order-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Order Details Section */
+        .order-details-section {
+            padding: 60px 0;
+            background: linear-gradient(to bottom, #f1f9f7, #e3f4f1);
+            display: none;
+        }
+
+        .order-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .order-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .order-id {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 18px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .order-status {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .tracking-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .tracking-steps:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gray);
+            z-index: 1;
+        }
+
+        .tracking-steps:after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: var(--primary);
+            z-index: 2;
+            transition: width 1s ease;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .step-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 20px;
+            transition: var(--smooth-transition);
+        }
+
+        .step.active .step-icon {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 0 8px rgba(0, 184, 148, 0.2);
+        }
+
+        .step.completed .step-icon {
+            background: var(--primary);
+            color: white;
+        }
+
+        .step-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: #888;
+            text-align: center;
+        }
+
+        .step.active .step-text {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .step.completed .step-text {
+            color: var(--dark);
+        }
+
+        .order-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .info-card {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .info-card h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--dark);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 8px;
+        }
+
+        .info-item {
+            margin-bottom: 10px;
+            display: flex;
+        }
+
+        .info-label {
+            font-weight: 600;
+            min-width: 120px;
+            color: var(--dark);
+        }
+
+        .order-items {
+            margin: 30px 0;
+        }
+
+        .order-items h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--dark);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 8px;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .order-item img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            margin-right: 15px;
+            padding: 5px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .order-item-details {
+            flex-grow: 1;
+        }
+
+        .order-item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .order-item-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .order-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .order-item-total {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 18px;
+        }
+
+        .order-summary {
+            background: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .order-summary h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--dark);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 8px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid var(--gray);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .total-amount {
+            color: var(--primary);
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--secondary);
+            color: var(--dark);
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--smooth-transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Checkout Section */
+        .checkout-section {
+            padding: 80px 0;
+            background: linear-gradient(to bottom, #f1f9f7, #e3f4f1);
+            display: none;
+        }
+
+        .checkout-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .checkout-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .checkout-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: var(--smooth-transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 184, 148, 0.2);
+        }
+
+        .place-order-btn {
+            grid-column: 1 / -1;
+            padding: 15px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: var(--smooth-transition);
+        }
+
+        .place-order-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--smooth-transition);
+            font-size: 15px;
+        }
+
+        .footer-column a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 18px;
+            transition: var(--smooth-transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .order-info {
+                grid-template-columns: 1fr;
+            }
+
+            .tracking-steps {
+                flex-direction: column;
+                gap: 30px;
+                align-items: flex-start;
+            }
+
+            .tracking-steps:before,
+            .tracking-steps:after {
+                top: 0;
+                left: 20px;
+                width: 4px;
+                height: 100%;
+            }
+
+            .tracking-steps:after {
+                width: 4px;
+                height: 75%;
+            }
+
+            .step {
+                flex-direction: row;
+                gap: 15px;
+            }
+
+            .step-text {
+                text-align: left;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .checkout-form {
+                grid-template-columns: 1fr;
+            }
+
+            .header-top {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .delivery-tag,
+            .location-selector {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header-actions {
+                gap: 15px;
+            }
+
+            .header-actions a span {
+                display: none;
+            }
+
+            .order-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+
+            .order-item img {
+                margin-right: 0;
+                margin-bottom: 12px;
+            }
+
+            .tracking-steps:before,
+            .tracking-steps:after {
+                left: 18px;
+            }
+
+            .step {
+                gap: 12px;
+            }
+
+            .step-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .step-text {
+                font-size: 13px;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: var(--success);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: var(--danger);
+        }
+
+
+        /* Mobile Navigation */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 15px;
+                top: 15px;
+            }
+
+            .header-top {
+                flex-wrap: wrap;
+                padding: 10px 0;
+            }
+
+            .logo h1 {
+                font-size: 24px;
+            }
+
+            .delivery-tag,
+            .location-selector {
+                width: 100%;
+                justify-content: center;
+                margin: 5px 0;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: space-around;
+                margin-top: 10px;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                z-index: 1000;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0;
+                padding: 10px 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 12px 20px;
+                border-radius: 0;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 15px;
+            }
+
+            .product-image {
+                height: 150px;
+            }
+
+            .product-name {
+                font-size: 16px;
+            }
+
+            .product-price {
+                font-size: 18px;
+            }
+
+            .product-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .quantity-selector {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .add-to-cart-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+
+            .cart-item img {
+                margin-right: 0;
+                margin-bottom: 12px;
+            }
+
+            .checkout-form {
+                grid-template-columns: 1fr;
+            }
+
+            .order-info {
+                grid-template-columns: 1fr;
+            }
+
+            .tracking-steps {
+                flex-direction: column;
+                gap: 30px;
+                align-items: flex-start;
+            }
+
+            .tracking-steps:before,
+            .tracking-steps:after {
+                top: 0;
+                left: 20px;
+                width: 4px;
+                height: 100%;
+            }
+
+            .tracking-steps:after {
+                width: 4px;
+                height: 75%;
+            }
+
+            .step {
+                flex-direction: row;
+                gap: 15px;
+            }
+
+            .step-text {
+                text-align: left;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 25px;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .product-info {
+                padding: 15px;
+            }
+
+            .cart-container,
+            .track-order-container,
+            .checkout-container,
+            .order-container {
+                padding: 20px 15px;
+            }
+        }
+
+        /* Improve touch targets for mobile */
+        .quantity-btn,
+        .add-to-cart-btn,
+        .nav-links a,
+        .header-actions a {
+            min-height: 44px;
+            min-width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Improve form input readability on mobile */
+        .form-input,
+        .order-id-input {
+            font-size: 16px;
+            /* Prevents zoom on iOS */
+        }
+
+        /* Circular cart icon in bottom right corner */
+        #cart-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 70px;
+            height: 70px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        #cart-link:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        #cart-link i {
+            font-size: 28px;
+        }
+
+        #cart-link .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+
+        #cart-link span:not(.cart-count) {
+            display: none;
+        }
+
+        /* Fix for cart count visibility on mobile */
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 768px) {
+            .header-actions {
+                position: relative;
+            }
+
+            .header-actions a {
+                padding: 8px 5px;
+            }
+
+            .cart-count {
+                top: 2px;
+                right: 2px;
+                width: 20px;
+                height: 20px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-actions {
+                gap: 10px;
+            }
+
+            .header-actions a span {
+                font-size: 12px;
+            }
+
+            .cart-count {
+                top: 0;
+                right: 0;
+                width: 18px;
+                height: 18px;
+                font-size: 11px;
+            }
+        }
+
+        /* Animation for cart updates */
+        @keyframes pulse-cart {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .cart-count.update {
+            animation: pulse-cart 0.5s ease;
+        }
+
+        /* Improve header layout for mobile */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-wrap: wrap;
+                padding: 10px 0;
+                position: relative;
+            }
+
+            .logo {
+                order: 1;
+                width: 50%;
+            }
+
+            .header-actions {
+                order: 2;
+                width: 50%;
+                justify-content: flex-end;
+                margin-top: 0;
+            }
+
+            .delivery-tag {
+                order: 3;
+                width: 100%;
+                margin: 8px 0;
+                justify-content: center;
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .location-selector {
+                order: 4;
+                width: 100%;
+                justify-content: center;
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .logo h1 {
+                font-size: 22px;
+            }
+
+
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                width: 40%;
+            }
+
+            .header-actions {
+                width: 60%;
+            }
+
+            .logo h1 {
+                font-size: 20px;
+            }
+
+            .header-actions a span {
+                display: none;
+                /* Hide text labels on very small screens */
+            }
+
+            .header-actions a i {
+                font-size: 22px;
+            }
+
+            #cart-link {
+                width: 60px;
+                height: 60px;
+            }
+
+            #cart-link i {
+                font-size: 24px;
+            }
+
+            /* Ensure cart count is visible even when text is hidden */
+            .header-actions a span.cart-count {
+                display: flex !important;
+            }
+        }
+
+        :root {
+            --progress-width: 0%;
+            /* your other existing variables */
+        }
+
+        /* Stock status badges */
+        .product-image-container {
+            position: relative;
+        }
+
+        .out-of-stock-badge,
+        .in-stock-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            /* Oval shape */
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+
+        .out-of-stock-badge {
+            background: linear-gradient(135deg, #ff6b6b, #c73636);
+            color: white;
+            animation: pulse-red 2s infinite;
+        }
+
+        .in-stock-badge {
+            background: linear-gradient(135deg, #51cf66, #2f9e44);
+            color: white;
+        }
+
+        /* Pulsing animation for out-of-stock items */
+        @keyframes pulse-red {
+            0% {
+                box-shadow: 0 0 0 0 rgba(207, 81, 81, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(207, 81, 81, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(207, 81, 81, 0);
+            }
+        }
+
+        /* Grey out out-of-stock products */
+        .product-card.out-of-stock {
+            opacity: 0.85;
+            position: relative;
+        }
+
+        .product-card.out-of-stock::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.03);
+            pointer-events: none;
+            border-radius: 15px;
+        }
+
+        .tracking-steps:after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: var(--progress-width);
+            height: 4px;
+            background: var(--primary);
+            z-index: 2;
+            transition: width 0.5s ease;
+        }
+
+        /* For mobile view */
+        @media (max-width: 768px) {
+            .tracking-steps:after {
+                top: 0;
+                left: 20px;
+                width: 4px;
+                height: var(--progress-width);
+            }
+        }
+
+        /* Loading Indicator */
+        .loading-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--gray);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-indicator p {
+            color: var(--dark);
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* Order placement loading spinner */
+        .order-loading-spinner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .order-loading-spinner .loading-spinner {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+        .order-loading-spinner p {
+            color: var(--dark);
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Hide loading indicator when products are shown */
+        .products-grid:not(:empty)+.loading-indicator {
+            display: none;
+        }
+
+        .stock-notice-banner {
+            background: linear-gradient(135deg, #ffd43b, #fcc419);
+            color: #f40808;
+            padding: 12px 0;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(239, 4, 4, 0.1);
+        }
+
+
+        .stock-notice-banner i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .stock-notice-banner .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Free Delivery Banner */
+        .free-delivery-banner {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            padding: 12px 0;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            animation: delivery-pulse 2s infinite;
+        }
+
+        .free-delivery-banner .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .free-delivery-banner i {
+            font-size: 20px;
+            animation: truck-move 2s infinite;
+        }
+
+        @keyframes delivery-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            }
+
+            50% {
+                box-shadow: 0 2px 15px rgba(76, 175, 80, 0.4);
+            }
+        }
+
+        @keyframes truck-move {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stock-notice-banner {
+                padding: 10px 0;
+                font-size: 14px;
+            }
+
+            .stock-notice-banner i {
+                font-size: 16px;
+            }
+        }
+
+        /* WhatsApp Contact Section - Sticky Button */
+        .whatsapp-contact {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
+            animation: pulse-whatsapp 2s infinite;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.7);
+            background: #128C7E;
+        }
+
+        .whatsapp-btn i {
+            font-size: 24px;
+        }
+
+        @keyframes pulse-whatsapp {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* WhatsApp Contact Section - Super Highlighted */
+        .whatsapp-contact {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+        }
+
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            text-decoration: none;
+            padding: 18px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            animation: pulse-whatsapp 1.5s infinite, bounce 2s infinite;
+            border: 3px solid white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whatsapp-btn:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            animation: shine 3s infinite;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.8);
+            background: linear-gradient(135deg, #128C7E, #25D366);
+        }
+
+        .whatsapp-btn:hover:before {
+            left: 100%;
+        }
+
+        .whatsapp-btn i {
+            font-size: 28px;
+            animation: wiggle 2s infinite;
+        }
+
+        @keyframes pulse-whatsapp {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes wiggle {
+
+            0%,
+            7% {
+                transform: rotate(0);
+            }
+
+            2% {
+                transform: rotate(-8deg);
+            }
+
+            4% {
+                transform: rotate(8deg);
+            }
+
+            6% {
+                transform: rotate(-4deg);
+            }
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+
+            20% {
+                left: 100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* WhatsApp Banner for maximum visibility */
+        .whatsapp-banner {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            position: relative;
+            z-index: 99;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+            animation: banner-pulse 3s infinite;
+        }
+
+        .whatsapp-banner .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .whatsapp-banner-text {
+            font-size: 18px;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .whatsapp-banner-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            color: #25D366;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: btn-pulse 2s infinite;
+        }
+
+        .whatsapp-banner-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            background: #ffeb3b;
+            color: #25D366;
+        }
+
+        .whatsapp-banner-btn i {
+            font-size: 20px;
+        }
+
+        @keyframes banner-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            }
+
+            50% {
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            }
+        }
+
+        @keyframes btn-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        /* Add a floating notification for first-time visitors */
+        .whatsapp-notification {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            background: white;
+            color: #25D366;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            max-width: 250px;
+            animation: slideIn 0.5s ease, fadeOut 0.5s ease 4.5s forwards;
+            border-left: 4px solid #25D366;
+        }
+
+        .whatsapp-notification:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 30px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid white;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .whatsapp-btn {
+                padding: 15px 20px;
+                font-size: 16px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .whatsapp-btn i {
+                font-size: 24px;
+            }
+
+            .whatsapp-banner {
+                padding: 12px 0;
+            }
+
+            .whatsapp-banner-text {
+                font-size: 16px;
+                text-align: center;
+            }
+
+            .whatsapp-banner-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+
+            .whatsapp-notification {
+                bottom: 90px;
+                right: 15px;
+                max-width: 200px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section -->
+    <!-- Update the header-top section to include the mobile menu button -->
+    <header>
+        <div class="header-top">
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <div class="logo">
+                <i class="fas fa-apple-alt logo-icon"></i>
+                <h1>Fruit Wala </h1>
+
+
+            </div>
+
+            <!-- The rest of the header content remains the same -->
+            <div class="delivery-tag">
+                <i class="fas fa-bolt"></i>
+                <span>DELIVERY in Hour</span>
+            </div>
+
+            <div class="location-selector">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Deliver to <b>VIT Bhopal College and it near by</b></span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+
+            <div class="header-actions">
+                <a href="#" id="home-link">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" id="cart-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Cart</span>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a>
+                <a href="#" id="track-order-link">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>My Orders</span>
+                </a>
+            </div>
+        </div>
+
+        <nav>
+            <div class="container">
+                <ul class="nav-links">
+                    <li><a href="fruit.html" data-category="all">All Fruits</a></li>
+                    <li><a href="fruit.html" data-category="seasonal">Seasonal</a></li>
+                    <li><a href="fruit.html" data-category="exotic">Exotic</a></li>
+                    <li><a href="fruit.html" data-category="organic">Organic</a></li>
+                    <li><a href="fruit.html" data-category="deals">Best Deals</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Fresh Fruits Delivered in Minutes</h1>
+                <p class="hero-subtitle">Enjoy the freshest seasonal fruits delivered right to your doorstep. Quality
+                    guaranteed!</p>
+                <a href="#products" class="hero-btn">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <div class="stock-notice-banner">
+        <div class="container">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Kindly ensure to take delivery on time. If you do not answer the delivery boy's call, your order will
+                be rejected.</span>
+        </div>
+    </div>
+
+   
+
+    <!-- Products Section -->
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <h2 class="section-title">Our Fresh Fruits</h2>
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be loaded dynamically -->
+            </div>
+            <!-- Add this loading indicator -->
+            <div class="loading-indicator" id="loading-indicator">
+                <div class="loading-spinner"></div>
+                <p>Loading fresh fruits...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section class="cart-section" id="cart">
+        <div class="container">
+            <div class="cart-container">
+                <h2 class="cart-title">Your Cart</h2>
+                <div class="cart-items" id="cart-items">
+                    <!-- Cart items will be loaded dynamically -->
+                </div>
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span id="cart-subtotal">₹0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Delivery Fee:</span>
+                        
+
+                        <span id="cart-delivery">₹0</span>
+                    </div>
+
+                    <div class="summary-item">
+                        <span>Discount:</span>
+                        <span id="cart-discount">-₹0</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total:</span>
+                        <span class="total-amount" id="cart-total">₹0</span>
+                    </div>
+                    <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Track Order Section -->
+    <section class="track-order-section" id="track-order">
+        <div class="container">
+            <div class="track-order-container">
+                <h2 class="track-order-title">My Orders & Track Order</h2>
+                <form class="track-order-form" id="track-order-form">
+                    <div class="input-container">
+                        <i class="fas fa-receipt input-icon"></i>
+                        <input type="text" class="order-id-input" id="order-id-input"
+                            placeholder="Enter your order ID manually to track" required>
+                    </div>
+                    <button type="submit" class="track-order-btn">
+                        <i class="fas fa-search-location"></i>
+                        Track Order
+                    </button>
+                </form>
+                <div id="track-order-result">
+                    <!-- Track order result will be shown here -->
+                </div>
+
+                <div class="recent-orders-container" id="recent-orders-container"
+                    style="display: none; margin-top: 30px;">
+                    <h3
+                        style="font-size: 20px; margin-bottom: 15px; border-bottom: 2px solid var(--primary); padding-bottom: 8px;">
+                        Your Recent Orders</h3>
+                    <div id="recent-orders-list">
+                        <!-- Recent orders injected by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section" id="checkout">
+        <div class="container">
+            <div class="checkout-container">
+                <h2 class="checkout-title">Checkout</h2>
+                <form class="checkout-form" id="checkout-form">
+                    <div class="form-group">
+                        <label class="form-label" for="customer-name">Full Name</label>
+                        <input type="text" class="form-input" id="customer-name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="customer-email">Email</label>
+                        <input type="email" class="form-input" id="customer-email" placeholder="Enter your email"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="customer-phone">Phone Number</label>
+                        <input type="tel" class="form-input" id="customer-phone" placeholder="Enter your phone number"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="customer-address">Delivery Address</label>
+                        <input type="text" class="form-input" id="customer-address"
+                            placeholder="Enter your delivery address" required>
+                    </div>
+
+
+                    <div class="form-group full-width">
+                        <label class="form-label" for="customer-notes">Delivery Notes (Optional)</label>
+                        <input type="text" class="form-input" id="customer-notes"
+                            placeholder="Any specific instructions for delivery">
+                    </div>
+                    <!-- Order placement loading spinner -->
+                    <div class="order-loading-spinner" id="order-loading-spinner" style="display: none;">
+                        <div class="loading-spinner"></div>
+                        <p>Placing your order...</p>
+                    </div>
+                    <button type="submit" class="place-order-btn" id="place-order-btn">Place Order</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Details Section -->
+    <section class="order-details-section" id="order-details">
+        <div class="container">
+            <div class="order-container">
+                <h2 class="order-title">Order Details</h2>
+                <div class="order-id" id="order-details-id">Order ID: #123456</div>
+                <div class="order-status" id="order-status">Preparing your order</div>
+
+                <div class="tracking-steps" id="tracking-steps">
+                    <div class="step completed">
+                        <div class="step-icon"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="step-text">Order Placed</div>
+                    </div>
+                    <div class="step active">
+                        <div class="step-icon"><i class="fas fa-utensils"></i></div>
+                        <div class="step-text">Preparing</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-user"></i></div>
+                        <div class="step-text">On the Way</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon"><i class="fas fa-check"></i></div>
+                        <div class="step-text">Delivered</div>
+                    </div>
+                </div>
+
+                <div class="order-info">
+                    <div class="info-card">
+                        <h3>Delivery Address</h3>
+                        <div class="info-item">
+                            <span class="info-label" id="delivery-name">John Doe</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-address" id="delivery-address">123 Main Street, Apartment 4B</span>
+                        </div>
+
+                        <span class="info-phone" id="delivery-phone">Phone: (123) 456-7890</span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Order Information</h3>
+                    <div class="info-item">
+                        <span class="info-label">Order ID:</span>
+                        <span id="order-info-id">#123456</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Order Date:</span>
+                        <span id="order-date">June 15, 2023</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Estimated Delivery:</span>
+                        <span id="delivery-time">25-35 minutes</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Payment Method:</span>
+                        <span id="payment-method">Cash on Delivery</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-items">
+                <h3>Order Items</h3>
+                <div id="order-items-list">
+                    <!-- Order items will be loaded dynamically -->
+                </div>
+            </div>
+
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <div class="summary-item">
+                    <span>Subtotal:</span>
+                    <span id="order-subtotal">₹0</span>
+                </div>
+                <div class="summary-item">
+                    <span>Delivery Fee:</span>
+                    <span id="order-delivery">₹0</span>
+                    
+                </div>
+                <div class="summary-item">
+                    <span>Discount:</span>
+                    <span id="order-discount">-₹0</span>
+                </div>
+                <div class="summary-total">
+                    <span>Total:</span>
+                    <span class="total-amount" id="order-total">₹0</span>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="#" class="btn" id="back-to-home">Continue Shopping</a>
+                <a href="#" class="btn btn-primary" id="track-another-order">Track Another Order</a>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Fruit Wala</h3>
+                    <p>Fresh fruits delivered to your doorstep in minutes. Quality guaranteed!</p>
+
+                </div>
+
+
+
+
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+
+                        <li><i class="fas fa-phone"></i> +91 7974088441</li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2025 vit360. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+
+    <!-- Replace the entire script section in fruit.html with this updated code -->
+        <script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyA4xnfa5M5gHJ-ZTsagIpFhNEOig5gyNV8",
+  authDomain: "gmart-2732d.firebaseapp.com",
+  databaseURL: "https://gmart-2732d-default-rtdb.firebaseio.com",
+  projectId: "gmart-2732d",
+  storageBucket: "gmart-2732d.firebasestorage.app",
+  messagingSenderId: "777770958783",
+  appId: "1:777770958783:web:bfefe6102b9f69152deb0a",
+  measurementId: "G-Z55PVTHN2T"
+};
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Global variables
+        let fruits = []; // This will be populated from Firebase
+        let cart = [];
+        let myOrders = [];
+        let currentOrderId = null;
+
+        // DOM Elements
+        const productsGrid = document.getElementById('products-grid');
+        const cartItems = document.getElementById('cart-items');
+        const cartCount = document.getElementById('cart-count');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartDelivery = document.getElementById('cart-delivery');
+        const cartDiscount = document.getElementById('cart-discount');
+        const cartTotal = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const trackOrderForm = document.getElementById('track-order-form');
+        const orderIdInput = document.getElementById('order-id-input');
+        const checkoutForm = document.getElementById('checkout-form');
+        const notification = document.getElementById('notification');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const orderLoadingSpinner = document.getElementById('order-loading-spinner');
+        const placeOrderBtn = document.getElementById('place-order-btn');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const nav = document.querySelector('nav');
+
+        // Navigation Links
+        const homeLink = document.getElementById('home-link');
+        const cartLink = document.getElementById('cart-link');
+        const trackOrderLink = document.getElementById('track-order-link');
+        const backToHomeBtn = document.getElementById('back-to-home');
+        const trackAnotherOrderBtn = document.getElementById('track-another-order');
+
+        // Sections
+        const homeSection = document.getElementById('home');
+        const productsSection = document.getElementById('products');
+        const cartSection = document.getElementById('cart');
+        const trackOrderSection = document.getElementById('track-order');
+        const checkoutSection = document.getElementById('checkout');
+        const orderDetailsSection = document.getElementById('order-details');
+
+        // Initialize the app
+        function initApp() {
+            loadFruitsFromFirebase();
+            loadCartFromStorage();
+            loadMyOrdersFromStorage();
+            setupEventListeners();
+        }
+
+        // Load fruits from Firebase
+        function loadFruitsFromFirebase() {
+            // Show loading indicator
+            if (loadingIndicator) {
+                loadingIndicator.style.display = 'flex';
+            }
+
+            database.ref('fruits').once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        fruits = snapshot.val();
+                        renderProducts();
+                        updateCartUI();
+                    } else {
+                        // If no fruits in database, use default ones
+                        fruits = [
+                        {
+                            id: 1,
+                            name: "Combo Pack -  2 Apple(सेब),2 Orange(संतरे),2 Banana(केले),2 Cucumber (खीरे)",
+                            price: 149,
+                            image: "https://www.shutterstock.com/image-vector/super-combo-offer-typography-logo-600nw-2313343509.jpg",
+                            category: "exotic",
+                            unit: "1 Pack",
+                            stock: 5000
+                        },
+                        {
+                            id: 2,
+                            name: "Apple (सेब)",
+                            price: 120,
+                            image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                            category: "seasonal",
+                            unit: "500 Gram",
+                            stock: 5000
+                        },
+                        {
+                            id: 3,
+                            name: "Banana (केला)",
+                            price:60,
+                            image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80",
+                            category: "organic",
+                            unit: "kg",
+                            stock: 5000
+                        },
+                        {
+                            id: 4,
+                            name: "Pomegranate (अनार)",
+                            price: 140,
+                            image: "https://aramgarhorchards.com/wp-content/uploads/2018/08/Pomegranate.jpg",
+                            category: "seasonal",
+                            unit: "500 Gram",
+                            stock: 5000
+                        },
+                         {
+                            id: 5,
+                            name: "Combo Pack -  2 Tamatar, 4 Pyaj , 2 Nimbu, green chilli (टमाटर, प्याज, नींबू ,हरी मिर्च)",
+                            price: 60,
+                            image: "https://www.shutterstock.com/image-vector/super-combo-offer-typography-logo-600nw-2313343509.jpg",
+                            category: "exotic",
+                            unit: "1 Pack",
+                            stock: 5000
+                        },
+                        {
+                            id: 6,
+                            name: "Orange (संतरा)",
+                            price: 85,
+                            image: "https://images.unsplash.com/photo-1547514701-42782101795e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+                            category: "seasonal",
+                            unit: "500 Gram",
+                            stock: 5000
+                        },
+                        {
+                            id: 7,
+                            name: "Strawberry (स्ट्रॉबेरी)",
+                            price: 99,
+                            image: "https://images.unsplash.com/photo-1543528176-61b239494933?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80",
+                            category: "seasonal",
+                            unit: "250 Gram",
+                            stock: 5000
+                        },
+                        {
+                            id: 8,
+                            name: "Grape (अंगूर)",
+                            price: 140,
+                            image: "https://www.aishcart.in/6098/sweet-green-grapes-box-5kg.jpg",
+                            category: "seasonal",
+                            unit: "500 gram",
+                            stock: 5000
+                        },
+                        {
+                            id: 9,
+                            name: "Mango (आम)",
+                            price: 90,
+                            image: "https://images.unsplash.com/photo-1553279768-865429fa0078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80",
+                            category: "seasonal",
+                            unit: "kg",
+                            stock: 5000
+                        },
+                        {
+                            id: 10,
+                            name: "Pineapple (अनानास)",
+                            price: 110,
+                            image: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+                            category: "exotic",
+                            unit: " 1 kg piece",
+                            stock: 5000
+                        },
+                        {
+                            id: 11,
+                            name: "Guava (अमरूद)",
+                            price: 120,
+                            image: "https://www.haridwarmart.com/wp-content/uploads/2019/11/guava-1514365-1920x1440.jpg",
+                            category: "seasonal",
+                            unit: "kg",
+                            stock: 5000
+                        },
+                        {
+                            id: 12,
+                            name: "Pear (नाशपाती)",
+                            price: 140,
+                            image: "https://www.bbassets.com/media/uploads/p/l/30000599_13-fresho-pear-green-indian.jpg",
+                            category: "seasonal",
+                            unit: "500 Gram",
+                            stock: 5000
+                        },
+                        {
+                            id: 13,
+                            name: "Watermelon (तरबूज)",
+                            price: 120,
+                            image: "https://www.watermelon.org/wp-content/uploads/2020/07/Seeded-Wedge-scaled.jpg",
+                            category: "seasonal",
+                            unit: "kg",
+                            stock: 5000
+                        },
+                        {
+                            id: 14,
+                            name: "Big Lemon (बड़ा नींबू)",
+                            price: 25,
+                            image: "images/lemon-on-white-background.webp",
+                            category: "seasonal",
+                            unit: "5 piece",
+                            stock: 5000
+                        },
+                        {
+                            id: 15,
+                            name: "Big Kiwi (बड़ी कीवी)",
+                            price: 200,
+                            image: "https://americanbazaaronline.com/wp-content/uploads/2021/08/Chilean-Kiwi_Premium.jpg",
+                            category: "exotic",
+                            unit: "3 piece",
+                            stock: 5000
+                        },
+                        {
+                            id: 16,
+                            name: "Sitafaal (सीताफल)",
+                            price: 90,
+                            image: "https://doorkisan.com/wp-content/uploads/2020/11/p24.jpg",
+                            category: "seasonal",
+                            unit: "500 Gram",
+                            stock: 5000
+                        },
+                        {
+                            id: 17,
+                            name: "Dragon Fruit(ड्रैगन फ्रूट)",
+                            price: 110,
+                            image: "images/dragon-fruit-pink-peel-green-stalk-slice-photo.webp",
+                            category: "exotic",
+                            unit: "piece",
+                            stock: 5000
+                        },
+                        {
+                            id: 18,
+                            name: "Small Kiwi (छोटी कीवी)",
+                            price: 149,
+                            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC9-DlIzY90zKxS5bamFowzhKh5XzfGPlZFA&s",
+                            category: "exotic",
+                            unit: "3 piece",
+                            stock: 5000
+                        },
+                        {
+                            id: 19,
+                            name: "Papaya (पपीता)",
+                            price: 90,
+                            image: "https://5.imimg.com/data5/SELLER/Default/2023/2/JB/UV/OC/183254488/fresh-organic-papaya.jpg",
+                            category: "exotic",
+                            unit: "kg",
+                            stock: 5000
+                        },
+                        {
+                            id: 20,
+                            name: "Lime (मौसमी)",
+                            price: 90,
+                            image: "https://media.istockphoto.com/id/944553240/photo/large-group-of-sweet-lime-or-mosambi.jpg?s=612x612&w=0&k=20&c=BUe4VFnHoZemaSP-S1H6UihTjpKbzy4igWjVxiBKymE=",
+                            category: "seasonal",
+                            unit: "500 Gram",
+                            stock: 5000
+                        },
+                        {
+                            id: 21,
+                            name: "Coconut Water (नारियल पानी)",
+                            price: 99,
+                            image: "https://t3.ftcdn.net/jpg/04/96/06/36/360_F_496063672_SXaO1U0iPnP1PlN2KD7OmSO3V0gvqDAo.jpg",
+                            category: "exotic",
+                            unit: "piece",
+                            stock: 5000
+                        },
+                        {
+                            id: 22,
+                            name: "Dates (खजूर)",
+                            price: 99,
+                            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmIWOD6fZIrfFeA-g6WbtgBXR3s1jtNUKUf21mkP0DE4pSlhygE7isSj8ARzRrdsEdmS4&usqp=CAU",
+                            category: "exotic",
+                            unit: "250 Gram",
+                            stock: 5000
+                        },
+                        {
+                            id: 23,
+                            name: "Cucumber (खीरा)",
+                            price: 49,
+                            image: "https://imgs.search.brave.com/D1swqyF_E-j23h3zzs0VFWhtNLdw98xms08aAxzKyEM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/Y2xldnVwLmluLzI0/Njc0NS8xNjYwNjQ5/Mzk3NTkyX1NLVS0w/MDI2XzEuanBlZz93/aWR0aD02MDAmZm9y/bWF0PXdlYnA",
+                            category: "organic",
+                            unit: "kg",
+                            stock: 5000
+                        },
+                        {
+                            id: 24,
+                            name: "Beet Root (चुकंदर)",
+                            price: 90,
+                            image: "https://www.veggycation.com.au/siteassets/veggycationvegetable/beetroot.jpg",
+                            category: "organic",
+                            unit: "kg",
+                            stock: 5000
+                        },
+                        {
+                            id: 25,
+                            name: "Carrot (गाजर)",
+                            price: 85,
+                            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4v0EP7SYBXKNDuoCZ-ib6gu2SZYZa5DHD9Q&s",
+                            category: "organic",
+                            unit: "500 Gram",
+                            stock: 5000
+                        },
+                        {
+                            id: 26,
+                            name: "Plum (आलूबुखारा)",
+                            price: 160,
+                            image:"images/a-rich-and-abundant-close-up-of-deep-purple-plums-their-smooth-glossy-skins-reflecting-light-creating-a-visually-appealing-pattern-of-fresh-ripe-fruit-free-photo.webp",
+                            category: "organic",
+                            unit: "500 gram",
+                            stock: 5000
+                        },
+                        {
+                            id: 27,
+                            name: "Chikoo (चीकू)",
+                            price: 90,
+                            image: "https://groaxo.com/wp-content/uploads/2020/04/sapota-fruit.jpg",
+                            category: "seasonal",
+                            unit: "500 gram",
+                            stock: 5000
+                        },
+                        {
+                            id: 28,
+                            name: "Avocado (अवोकाडो)",
+                            price: 160,
+                            image: "https://foodcare.in/cdn/shop/files/avocado.jpg?v=1736489196&width=416",
+                            category: "exotic",
+                            unit: "piece",
+                            stock: 5000
+                        },
+                        {
+                            id: 29,
+                            name: "Pyag (प्याज)",
+                            price: 49,
+                            image: "data:image/jpeg;base64,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",
+                            category: "organic",
+                            unit: "500 Gram",
+                            stock: 5000
+                        },
+                        {
+                            id: 30,
+                            name: "Tmatar (टमाटर)",
+                            price: 49,
+                            image: "images/tomato.png",
+                            category: "organic",
+                            unit: "500 Gram",
+                            stock: 5000
+                        },
+                        {
+                            id: 31,
+                            name: " Black Grape(काले अंगूर)",
+                            price: 140,
+                            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqezIZnW3-1SAX_eFkt_F9ULX1G91v7O7Elr8eirc2jMwtOz_r-cb-IlvFVhs_aDRFGK4&usqp=CAU",
+                            category: "exotic",
+                            unit: "500 Gram",
+                            stock: 5000
+                        }
+                      
+                        
+                    ];
+                        // Save default fruits to database
+                        database.ref('fruits').set(fruits);
+                        renderProducts();
+                        updateCartUI();
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error loading fruits:', error);
+                    showNotification('Error loading fruit data', true);
+
+                    // Hide loading indicator on error
+                    if (loadingIndicator) {
+                        loadingIndicator.style.display = 'none';
+                    }
+                });
+        }
+
+        // Render products to the page
+        function renderProducts() {
+            productsGrid.innerHTML = '';
+
+            fruits.forEach(fruit => {
+                const isOutOfStock = fruit.stock === 0;
+                const stockStatus = isOutOfStock ?
+                    '<div class="out-of-stock-badge">Out of Stock</div>' :
+                    '<div class="in-stock-badge">In Stock</div>';
+
+                const specialBadge = '';
+
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card' + (isOutOfStock ? ' out-of-stock' : '');
+                productCard.innerHTML = `
+                <div class="product-image-container">
+                    <img src="${fruit.image}" alt="${fruit.name}" class="product-image">
+                    ${specialBadge}
+                    ${stockStatus}
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">${fruit.name}</h3>
+                    <div class="product-price">₹${fruit.price} / ${fruit.unit}</div>
+                    <div class="product-actions">
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus" data-id="${fruit.id}" ${isOutOfStock ? 'disabled' : ''}>-</button>
+                            <input type="number" class="quantity-input" id="qty-${fruit.id}" value="0" min="0" readonly ${isOutOfStock ? 'disabled' : ''}>
+                            <button class="quantity-btn plus" data-id="${fruit.id}" ${isOutOfStock ? 'disabled' : ''}>+</button>
+                        </div>
+                        <button class="add-to-cart-btn" data-id="${fruit.id}" ${isOutOfStock ? 'disabled' : ''}>
+                            ${isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+                        </button>
+                    </div>
+                </div>
+            `;
+                productsGrid.appendChild(productCard);
+            });
+
+            // Hide loading indicator once products are rendered
+            if (loadingIndicator) {
+                loadingIndicator.style.display = 'none';
+            }
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                nav.classList.toggle('active');
+            });
+
+            // Navigation
+            homeLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('home');
+                nav.classList.remove('active');
+            });
+
+            cartLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('cart');
+                nav.classList.remove('active');
+            });
+
+            trackOrderLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('track-order');
+                nav.classList.remove('active');
+            });
+
+            backToHomeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('home');
+            });
+
+            trackAnotherOrderBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('track-order');
+            });
+
+            // Cart actions
+            productsGrid.addEventListener('click', (e) => {
+                if (e.target.classList.contains('plus')) {
+                    const id = parseInt(e.target.dataset.id);
+                    increaseQuantity(id);
+                } else if (e.target.classList.contains('minus')) {
+                    const id = parseInt(e.target.dataset.id);
+                    decreaseQuantity(id);
+                } else if (e.target.classList.contains('add-to-cart-btn')) {
+                    const id = parseInt(e.target.dataset.id);
+                    addToCart(id);
+                }
+            });
+
+            // Checkout
+            checkoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (cart.length > 0) {
+                    showSection('checkout');
+                } else {
+                    showNotification('Your cart is empty!', true);
+                }
+            });
+
+            // Track order form
+            trackOrderForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const orderId = orderIdInput.value.trim();
+                if (orderId) {
+                    trackOrder(orderId);
+                }
+            });
+
+            // Checkout form
+            checkoutForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                placeOrder();
+            });
+
+            // Cart items events (delegation)
+            cartItems.addEventListener('click', (e) => {
+                // Check if the clicked element or its parent has the remove-item class
+                if (e.target.classList.contains('remove-item') ||
+                    e.target.closest('.remove-item')) {
+                    const removeBtn = e.target.classList.contains('remove-item') ?
+                        e.target : e.target.closest('.remove-item');
+                    const id = parseInt(removeBtn.dataset.id);
+                    removeFromCart(id);
+                }
+            });
+        }
+
+        // Show a specific section and hide others
+        function showSection(sectionName) {
+            // Hide all sections
+            homeSection.style.display = 'none';
+            productsSection.style.display = 'none';
+            cartSection.style.display = 'none';
+            trackOrderSection.style.display = 'none';
+            checkoutSection.style.display = 'none';
+            orderDetailsSection.style.display = 'none';
+
+            // Hide cart icon for cart and checkout sections
+            if (sectionName === 'cart' || sectionName === 'checkout' || sectionName === 'order-details') {
+                if (cartLink) cartLink.style.display = 'none';
+            } else {
+                if (cartLink) cartLink.style.display = 'flex';
+            }
+
+            // Show the requested section
+            switch (sectionName) {
+                case 'home':
+                    homeSection.style.display = 'block';
+                    productsSection.style.display = 'block';
+                    break;
+                case 'cart':
+                    cartSection.style.display = 'block';
+                    break;
+                case 'track-order':
+                    trackOrderSection.style.display = 'block';
+                    break;
+                case 'checkout':
+                    checkoutSection.style.display = 'block';
+                    break;
+                case 'order-details':
+                    orderDetailsSection.style.display = 'block';
+                    break;
+            }
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Cart functions
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('fruitblink_cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+        }
+
+        function saveCartToStorage() {
+            localStorage.setItem('fruitblink_cart', JSON.stringify(cart));
+        }
+
+        function loadMyOrdersFromStorage() {
+            const savedOrders = localStorage.getItem('fruitblink_orders');
+            if (savedOrders) {
+                myOrders = JSON.parse(savedOrders);
+                renderMyOrders();
+            }
+        }
+
+        function saveOrderToStorage(order) {
+            const orderSummary = {
+                id: order.id,
+                date: order.date,
+                total: order.total,
+                status: order.status
+            };
+            if (!myOrders.find(o => o.id === order.id)) {
+                myOrders.unshift(orderSummary);
+                localStorage.setItem('fruitblink_orders', JSON.stringify(myOrders));
+                renderMyOrders();
+            }
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                'preparing': { bg: '#fff3e0', color: '#e67e22', icon: 'fa-fire' },
+                'processing': { bg: '#e3f2fd', color: '#2980b9', icon: 'fa-cog' },
+                'on the way': { bg: '#f3e5f5', color: '#8e44ad', icon: 'fa-motorcycle' },
+                'delivered': { bg: '#e8f5e9', color: '#27ae60', icon: 'fa-check-circle' },
+                'rejected': { bg: '#ffebee', color: '#c0392b', icon: 'fa-times-circle' }
+            };
+            return colors[status] || { bg: '#f5f5f5', color: '#636e72', icon: 'fa-clock' };
+        }
+
+        function renderMyOrders() {
+            const container = document.getElementById('recent-orders-container');
+            const list = document.getElementById('recent-orders-list');
+
+            if (!container || !list) return;
+
+            container.style.display = 'block';
+            list.innerHTML = '';
+
+            if (myOrders.length === 0) {
+                list.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px; color: #aaa;">
+                        <i class="fas fa-shopping-bag" style="font-size: 48px; margin-bottom: 15px; display: block; color: #e0e0e0;"></i>
+                        <p style="font-size: 16px; font-weight: 500;">No orders yet!</p>
+                        <p style="font-size: 13px; margin-top: 5px;">Your orders from this device will appear here.</p>
+                    </div>`;
+                return;
+            }
+
+            // Fetch live status from Firebase for each order
+            myOrders.forEach(localOrder => {
+                database.ref('orders/' + localOrder.id).once('value').then(snapshot => {
+                    const liveOrder = snapshot.exists() ? snapshot.val() : null;
+
+                    if (!liveOrder) {
+                        // Order was deleted from the admin panel
+                        myOrders = myOrders.filter(o => o.id !== localOrder.id);
+                        localStorage.setItem('fruitblink_orders', JSON.stringify(myOrders));
+
+                        if (myOrders.length === 0) {
+                            list.innerHTML = `
+                                <div style="text-align: center; padding: 40px 20px; color: #aaa;">
+                                    <i class="fas fa-shopping-bag" style="font-size: 48px; margin-bottom: 15px; display: block; color: #e0e0e0;"></i>
+                                    <p style="font-size: 16px; font-weight: 500;">No orders yet!</p>
+                                    <p style="font-size: 13px; margin-top: 5px;">Your orders from this device will appear here.</p>
+                                </div>`;
+                        }
+                        return; // Skip rendering
+                    }
+
+                    const status = liveOrder.status;
+                    const total = liveOrder.total;
+                    const date = liveOrder.date;
+
+                    // Update local storage with latest status
+                    localOrder.status = status;
+
+                    const sc = getStatusColor(status);
+                    const orderEl = document.createElement('div');
+                    orderEl.style.cssText = 'background: white; border-radius: 12px; margin-bottom: 14px; box-shadow: 0 3px 12px rgba(0,0,0,0.08); overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease;';
+                    orderEl.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-left: 4px solid ${sc.color};">
+                            <div style="flex:1;">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                    <span style="font-weight: 700; font-size: 14px; color: #2d3436;">#${localOrder.id}</span>
+                                    <span style="background: ${sc.bg}; color: ${sc.color}; font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 20px;">
+                                        <i class="fas ${sc.icon}" style="margin-right: 4px;"></i>${status.charAt(0).toUpperCase() + status.slice(1)}
+                                    </span>
+                                </div>
+                                <div style="font-size: 12px; color: #888;">${date} &nbsp;|&nbsp; <b style="color: #2d3436;">₹${total}</b></div>
+                            </div>
+                            <button class="track-recent-btn" data-id="${localOrder.id}" style="padding: 8px 16px; background: var(--gradient-primary); color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: 600; white-space: nowrap; flex-shrink: 0;">
+                                <i class="fas fa-eye" style="margin-right: 4px;"></i> View
+                            </button>
+                        </div>
+                    `;
+
+                    orderEl.querySelector('.track-recent-btn').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        document.getElementById('order-id-input').value = localOrder.id;
+                        trackOrder(localOrder.id);
+                    });
+
+                    orderEl.addEventListener('mouseenter', () => {
+                        orderEl.style.transform = 'translateY(-2px)';
+                        orderEl.style.boxShadow = '0 6px 18px rgba(0,0,0,0.12)';
+                    });
+                    orderEl.addEventListener('mouseleave', () => {
+                        orderEl.style.transform = 'translateY(0)';
+                        orderEl.style.boxShadow = '0 3px 12px rgba(0,0,0,0.08)';
+                    });
+
+                    list.appendChild(orderEl);
+                }).catch(() => {
+                    // Order might be deleted, skip it
+                });
+            });
+
+            // Persist updated statuses
+            localStorage.setItem('fruitblink_orders', JSON.stringify(myOrders));
+        }
+
+        function addToCart(id) {
+            const product = fruits.find(item => item.id === id);
+            const existingItem = cart.find(item => item.id === id);
+
+            // Check if product is in stock
+            if (product.stock === 0) {
+                showNotification('This product is out of stock', true);
+                return;
+            }
+
+            // Get the current quantity from the input field
+            const input = document.getElementById(`qty-${id}`);
+            const quantityToAdd = parseInt(input.value) || 1;
+
+            if (quantityToAdd <= 0) {
+                showNotification('Please select at least 1 item', true);
+                return;
+            }
+
+            if (existingItem) {
+                existingItem.quantity += quantityToAdd;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    unit: product.unit,
+                    quantity: quantityToAdd
+                });
+            }
+
+            // Reset the input to 0 after adding to cart
+            input.value = 0;
+
+            updateCartUI();
+            saveCartToStorage();
+            showNotification(`${quantityToAdd} ${product.name}(s) added to cart!`);
+        }
+
+
+
+        function increaseQuantity(id) {
+            const input = document.getElementById(`qty-${id}`);
+            const product = fruits.find(item => item.id === id);
+
+            if (product.stock > 0) {
+                input.value = parseInt(input.value) + 1;
+            } else {
+                showNotification('This product is out of stock', true);
+            }
+        }
+
+        function decreaseQuantity(id) {
+            const input = document.getElementById(`qty-${id}`);
+            if (parseInt(input.value) > 0) {
+                input.value = parseInt(input.value) - 1;
+            }
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            const input = document.getElementById(`qty-${id}`);
+            if (input) input.value = 0;
+            updateCartUI();
+            saveCartToStorage();
+            showNotification('Item removed from cart');
+        }
+
+        function updateCartUI() {
+            // Update product quantity inputs
+            cart.forEach(item => {
+                const input = document.getElementById(`qty-${item.id}`);
+                if (input) {
+                    input.value = item.quantity;
+                }
+            });
+
+            // Update cart items
+            cartItems.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+                cartCount.textContent = '0';
+                cartSubtotal.textContent = '₹0';
+                cartDelivery.textContent = '₹0';
+                cartDiscount.textContent = '₹0';
+                cartTotal.textContent = '₹0';
+                return;
+            }
+
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                // Get the current price from fruits array
+                const currentFruit = fruits.find(fruit => fruit.id === item.id);
+                const currentPrice = currentFruit ? currentFruit.price : item.price;
+
+                // Update the item price if it's different
+                if (currentPrice !== item.price) {
+                    item.price = currentPrice;
+                }
+
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                <img src="${item.image}" alt="${item.name}">
+                <div class="cart-item-details">
+                    <div class="cart-item-name">${item.name}</div>
+                    <div class="cart-item-price">₹${item.price} / ${item.unit}</div>
+                    <div class="cart-item-quantity">
+                        <span>Qty: ${item.quantity} ${item.unit}</span>
+                    </div>
+                </div>
+                <div class="cart-item-total">₹${itemTotal}</div>
+                <button class="remove-item" data-id="${item.id}">
+                    <i class="fas fa-trash"></i>
+                </button>
+            `;
+                cartItems.appendChild(cartItem);
+            });
+
+            // Save the updated cart (with potentially new prices)
+            saveCartToStorage();
+
+            // Calculate totals
+            const deliveryFee = subtotal < 199 ? 10 : 10;
+
+            let discount = subtotal >= 1000 ? 20 : 0;
+            const total = subtotal + deliveryFee - discount;
+
+            // Update cart summary
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            cartSubtotal.textContent = `₹${subtotal}`;
+
+            cartDelivery.textContent = deliveryFee === 0 ? 'FREE' : `₹${deliveryFee}`;
+
+            cartDiscount.textContent = discount > 0 ? `-₹${discount}` : '₹0';
+            cartTotal.textContent = `₹${total}`;
+
+            // Ensure cart count is always visible
+            if (totalItems > 0) {
+                cartCount.style.display = 'flex';
+            } else {
+                cartCount.style.display = 'none';
+            }
+        }
+
+        // Order functions
+        function placeOrder() {
+            const name = document.getElementById('customer-name').value;
+            const email = document.getElementById('customer-email').value;
+            const phone = document.getElementById('customer-phone').value;
+            const address = document.getElementById('customer-address').value;
+            const notes = document.getElementById('customer-notes').value;
+
+            // Show loading spinner
+            const orderLoadingSpinner = document.getElementById('order-loading-spinner');
+            const placeOrderBtn = document.getElementById('place-order-btn');
+
+            if (orderLoadingSpinner && placeOrderBtn) {
+                orderLoadingSpinner.style.display = 'flex';
+                placeOrderBtn.disabled = true;
+                placeOrderBtn.textContent = 'Placing Order...';
+            }
+
+            // Calculate order totals
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            const deliveryFee = subtotal < 199 ? 10 : 10;
+
+            let discount = subtotal >= 1000 ? 20 : 0;
+            const total = subtotal + deliveryFee - discount;
+
+            // Generate order ID
+            const orderId = 'FB' + Date.now();
+
+            // Create order object
+            const order = {
+                id: orderId,
+                customer: { name, email, phone, address, notes },
+                items: [...cart],
+                subtotal,
+                deliveryFee,
+                discount,
+                total,
+                status: 'preparing',
+                date: new Date().toLocaleDateString('en-IN', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                }),
+                deliveryTimeSlot: '',
+                estimatedDelivery: '12 Hours',
+                paymentMethod: 'Cash on Delivery'
+            };
+
+            // Save to Firebase
+            database.ref('orders/' + orderId).set(order)
+                .then(() => {
+                    // Hide loading spinner
+                    if (orderLoadingSpinner && placeOrderBtn) {
+                        orderLoadingSpinner.style.display = 'none';
+                        placeOrderBtn.disabled = false;
+                        placeOrderBtn.textContent = 'Place Order';
+                    }
+
+                    // Clear cart
+                    cart = [];
+                    saveCartToStorage();
+
+                    // Reset all quantity inputs to 0
+                    document.querySelectorAll('.quantity-input').forEach(input => {
+                        input.value = 0;
+                    });
+
+                    updateCartUI();
+
+                    // Reset checkout form
+                    checkoutForm.reset();
+
+                    // Show order details
+                    showOrderDetails(order);
+                    showSection('order-details');
+
+                    saveOrderToStorage(order);
+
+                    // Send email confirmation
+                    sendOrderConfirmationEmail(order);
+
+                    // Show success message
+                    showNotification('Order placed successfully!');
+                })
+                .catch((error) => {
+                    console.error('Error saving order: ', error);
+                    showNotification('Error placing order. Please try again.', true);
+
+                    // Hide loading spinner on error
+                    if (orderLoadingSpinner && placeOrderBtn) {
+                        orderLoadingSpinner.style.display = 'none';
+                        placeOrderBtn.disabled = false;
+                        placeOrderBtn.textContent = 'Place Order';
+                    }
+                });
+        }
+
+        function sendOrderConfirmationEmail(order) {
+            // EmailJS configuration
+            emailjs.init("B8m-Neyjze0nVMwUw");
+
+            const templateParams = {
+                to_email: order.customer.email,
+                to_name: order.customer.name,
+                order_id: order.id,
+                order_date: order.date,
+                order_total: `₹${order.total}`,
+                delivery_address: `${order.customer.address}`,
+                delivery_time_slot: order.deliveryTimeSlot,
+                estimated_delivery: order.estimatedDelivery
+            };
+
+            emailjs.send("service_efawcs6", "template_1hn78uj", templateParams)
+                .then((response) => {
+                    console.log('Email sent successfully:', response);
+                })
+                .catch((error) => {
+                    console.error('Error sending email:', error);
+                });
+        }
+
+        function trackOrder(orderId) {
+            database.ref('orders/' + orderId).once('value')
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const order = snapshot.val();
+                        showOrderDetails(order);
+                        showSection('order-details');
+                    } else {
+                        showNotification('Order not found. Please check your order ID.', true);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error fetching order: ', error);
+                    showNotification('Error fetching order details. Please try again.', true);
+                });
+        }
+
+        function showOrderDetails(order) {
+            // Update order info
+            document.getElementById('order-details-id').textContent = `Order ID: ${order.id}`;
+            document.getElementById('order-info-id').textContent = order.id;
+            document.getElementById('order-date').textContent = order.date;
+            document.getElementById('delivery-time').textContent = order.estimatedDelivery;
+            document.getElementById('payment-method').textContent = order.paymentMethod;
+
+            // Update delivery address
+            document.getElementById('delivery-name').textContent = order.customer.name;
+            document.getElementById('delivery-address').textContent = order.customer.address;
+            document.getElementById('delivery-phone').textContent = `Phone: ${order.customer.phone}`;
+
+            // Update order status
+            const statusElement = document.getElementById('order-status');
+            statusElement.textContent = order.status.charAt(0).toUpperCase() + order.status.slice(1);
+
+            // Add red color for rejected status
+            if (order.status === 'rejected') {
+                statusElement.style.backgroundColor = '#ff6b6b';
+                statusElement.style.color = '#fff';
+            } else {
+                statusElement.style.backgroundColor = '';
+                statusElement.style.color = '';
+            }
+
+            // Update progress bar based on status
+            const trackingSteps = document.getElementById('tracking-steps');
+            const steps = trackingSteps.querySelectorAll('.step');
+
+            steps.forEach(step => step.classList.remove('completed', 'active'));
+
+            if (order.status === 'preparing') {
+                steps[0].classList.add('completed');
+                steps[1].classList.add('active');
+                // Set progress line to 33%
+                document.documentElement.style.setProperty('--progress-width', '33%');
+            } else if (order.status === 'processing') {
+                steps[0].classList.add('completed');
+                steps[1].classList.add('completed');
+                steps[2].classList.add('active');
+                // Set progress line to 66%
+                document.documentElement.style.setProperty('--progress-width', '66%');
+            } else if (order.status === 'delivered') {
+                steps.forEach(step => step.classList.add('completed'));
+                // Set progress line to 100%
+                document.documentElement.style.setProperty('--progress-width', '100%');
+            } else if (order.status === 'rejected') {
+                // For rejected orders, show red progress bar
+                document.documentElement.style.setProperty('--progress-width', '100%');
+                document.documentElement.style.setProperty('--primary', '#ff6b6b');
+            }
+
+            // Update order items
+            const orderItemsList = document.getElementById('order-items-list');
+            orderItemsList.innerHTML = '';
+
+            order.items.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+
+                const orderItem = document.createElement('div');
+                orderItem.className = 'order-item';
+                orderItem.innerHTML = `
+                <img src="${item.image}" alt="${item.name}">
+                <div class="order-item-details">
+                    <div class="order-item-name">${item.name}</div>
+                    <div class="order-item-price">₹${item.price} / ${item.unit}</div>
+                    <div class="order-item-quantity">Qty: ${item.quantity} ${item.unit}</div>
+                </div>
+                <div class="order-item-total">₹${itemTotal}</div>
+            `;
+                orderItemsList.appendChild(orderItem);
+            });
+
+            // Update order summary
+            document.getElementById('order-subtotal').textContent = `₹${order.subtotal}`;
+
+            document.getElementById('order-delivery').textContent =
+                order.deliveryFee === 0 ? 'FREE' : `₹${order.deliveryFee}`;
+
+            document.getElementById('order-discount').textContent =
+                order.discount > 0 ? `-₹${order.discount}` : '₹0';
+            document.getElementById('order-total').textContent = `₹${order.total}`;
+        }
+
+        // Notification function
+        function showNotification(message, isError = false) {
+            if (!notification) return;
+
+            notification.textContent = message;
+            notification.classList.remove('error');
+            if (isError) notification.classList.add('error');
+
+            // trigger slide-in
+            notification.classList.add('show');
+
+            // remove after 3s
+            clearTimeout(notification._hideTimer);
+            notification._hideTimer = setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+
+</html>

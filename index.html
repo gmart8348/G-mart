@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gmart - Your One-Stop Fresh Market</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/icon-192.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #00b894;
+            --primary-dark: #008f7a;
+            --primary-light: #40c9a2;
+            --secondary: #fdcb6e;
+            --secondary-dark: #e8b547;
+            --accent: #e17055;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --dark: #1a1a2e;
+            --light: #f8fafc;
+            --gray: #e2e8f0;
+            --gray-light: #f1f5f9;
+            --white: #ffffff;
+            --premium-gold: #d4af37;
+            --premium-silver: #c0c0c0;
+            --card-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+            --card-shadow-hover: 0 35px 70px rgba(0, 0, 0, 0.12);
+            --premium-shadow: 0 30px 60px rgba(0, 184, 148, 0.1);
+            --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            --smooth-transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            --bounce-transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --gradient-primary: linear-gradient(135deg, #00b894 0%, #00a085 25%, #008f7a  50%, #007865 100%);
+            --gradient-secondary: linear-gradient(135deg, #fdcb6e 0%, #f0b44a 25%, #e8a317 75%, #d4941e 100%);
+            --gradient-hero: linear-gradient(135deg, rgba(0,184,148,0.95) 0%, rgba(0,160,133,0.9) 30%, rgba(253,203,110,0.85) 70%, rgba(225,112,85,0.8) 100%);
+            --gradient-premium: linear-gradient(135deg, #00b894, #40c9a2, #fdcb6e);
+            --gradient-glass: rgba(255, 255, 255, 0.25);
+            --backdrop-blur: blur(20px);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e0 100%);
+            color: var(--dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 25% 25%, rgba(0, 184, 148, 0.03) 0%, transparent 50%),
+                        radial-gradient(circle at 75% 75%, rgba(253, 203, 110, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: var(--backdrop-blur);
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            background: var(--gradient-premium);
+            border-radius: 50px; /* Creates an oval shape */
+            padding: 10px 20px;
+            box-shadow: var(--premium-shadow);
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: var(--gradient-premium);
+            border-radius: 50px; /* Creates an oval shape */
+            opacity: 0;
+            transition: var(--smooth-transition);
+            z-index: -1;
+        }
+
+        .logo:hover::before {
+            opacity: 0.1;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            background: white;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            letter-spacing: -1px;
+            position: relative;
+            margin: 0;
+        }
+
+        .logo h1::after {
+            content: '✨';
+            position: absolute;
+            top: -5px;
+            right: -20px;
+            font-size: 16px;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: scale(0.8) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+        }
+
+        .delivery-tag {
+            background: var(--gradient-secondary);
+            color: var(--dark);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: float 4s ease-in-out infinite;
+            box-shadow: var(--premium-shadow);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .delivery-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .delivery-tag i {
+            animation: truck-move 2s ease-in-out infinite;
+        }
+
+        @keyframes truck-move {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(3px); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-3px) rotate(1deg); }
+            50% { transform: translateY(-6px) rotate(0deg); }
+            75% { transform: translateY(-3px) rotate(-1deg); }
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            position: relative;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: var(--smooth-transition);
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: var(--backdrop-blur);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .action-btn.primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 15px 35px rgba(0, 184, 148, 0.2);
+        }
+
+        .action-btn.secondary {
+            background: var(--gradient-secondary);
+            color: var(--dark);
+            box-shadow: 0 15px 35px rgba(253, 203, 110, 0.2);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .action-btn.primary:hover {
+            box-shadow: 0 25px 50px rgba(0, 184, 148, 0.3);
+        }
+
+        .action-btn.secondary:hover {
+            box-shadow: 0 25px 50px rgba(253, 203, 110, 0.3);
+        }
+
+        .btn-glow {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s;
+        }
+
+        .action-btn:hover .btn-glow {
+            left: 100%;
+        }
+
+        .header-actions i {
+            font-size: 16px;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--gradient-primary);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-hero), url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll;
+            padding: 120px 0;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(0,184,148,0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(253,203,110,0.3) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            letter-spacing: -3px;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 30%, var(--premium-gold) 50%, #ffffff 70%, #f8fafc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3)); }
+            100% { filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.6)); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.6rem;
+            margin-bottom: 50px;
+            text-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            opacity: 0.95;
+            font-weight: 400;
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+
+
+        /* Categories Section */
+        .categories-section {
+            padding: 120px 0;
+            background: 
+                linear-gradient(135deg, var(--light) 0%, var(--gray-light) 50%, var(--light) 100%),
+                radial-gradient(circle at 50% 0%, rgba(0,184,148,0.05) 0%, transparent 50%);
+            position: relative;
+        }
+
+        .categories-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="2" height="2" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.3" fill="%2300b894" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.7;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            color: var(--dark);
+            position: relative;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .section-title::before {
+            content: '✨';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: var(--primary);
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 120px;
+            height: 4px;
+            background: var(--gradient-primary);
+            margin: 20px auto 0;
+            border-radius: 2px;
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid #eee;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .category-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .category-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .fruits-card .category-icon {
+            color: var(--accent);
+        }
+
+        .grocery-card .category-icon {
+            color: var(--secondary);
+        }
+
+        .category-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .category-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .category-status {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .category-status:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .status-available {
+            background: var(--gradient-primary);
+            color: white;
+            border: 2px solid var(--primary);
+        }
+
+        .status-coming-soon {
+            background: var(--gradient-secondary);
+            color: var(--dark);
+            border: 2px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-coming-soon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .status-coming-soon:hover::before {
+            left: 100%;
+        }
+
+        .coming-soon-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(253, 203, 110, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .grocery-card:hover .coming-soon-overlay {
+            opacity: 1;
+        }
+
+        .coming-soon-text {
+            background: var(--gradient-secondary);
+            color: var(--dark);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 8px 20px rgba(253, 203, 110, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 40px 25px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            transition: var(--smooth-transition);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--card-shadow-hover);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .feature-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 30px;
+            transition: var(--bounce-transition);
+            position: relative;
+            box-shadow: var(--premium-shadow);
+        }
+
+        .feature-icon::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--smooth-transition);
+            z-index: -1;
+        }
+
+        .feature-icon::after {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 20px;
+            opacity: 0;
+            transition: var(--smooth-transition);
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.15) rotate(360deg);
+            box-shadow: 0 25px 60px rgba(0, 184, 148, 0.4);
+        }
+
+        .feature-card:hover .feature-icon::before {
+            opacity: 0.2;
+            transform: scale(1.3) rotate(-360deg);
+        }
+
+        .feature-card:hover .feature-icon::after {
+            opacity: 1;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 0;
+            background: var(--gradient-primary);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(253, 203, 110, 0.2) 0%, transparent 50%);
+            animation: ctaGlow 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes ctaGlow {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .cta-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .cta-subtitle {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 20px 50px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: var(--backdrop-blur);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--bounce-transition);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: var(--smooth-transition);
+        }
+
+        .cta-btn:hover::before {
+            left: 100%;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .cta-btn.outline {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .cta-btn.outline:hover {
+            background: white;
+            color: var(--primary);
+            border-color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--smooth-transition);
+            font-size: 15px;
+        }
+
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 0;
+            }
+
+            .logo {
+                padding: 8px 15px;
+                border-radius: 40px;
+            }
+
+            .logo h1 {
+                font-size: 28px;
+            }
+
+            .logo-icon {
+                font-size: 28px;
+            }
+
+            .delivery-tag {
+                font-size: 12px;
+                padding: 10px 20px;
+                text-align: center;
+                order: 3;
+            }
+
+            .header-actions {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+                order: 2;
+            }
+
+            .action-btn {
+                padding: 12px 20px;
+                font-size: 13px;
+                min-height: 44px;
+                min-width: 120px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+                padding: 15px 0;
+            }
+
+            .nav-links a {
+                font-size: 14px;
+                padding: 14px 28px;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                backdrop-filter: blur(10px);
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50px;
+                font-weight: 700;
+            }
+
+            .hero-section {
+                padding: 80px 0;
+                background-attachment: scroll;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+                margin-bottom: 20px;
+                line-height: 1.2;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+                margin-bottom: 35px;
+                padding: 0 20px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .cta-btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+                min-height: 50px;
+            }
+
+            .categories-section {
+                padding: 80px 0;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+                margin-bottom: 40px;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .category-image {
+                height: 160px;
+            }
+
+            .category-content {
+                padding: 15px;
+            }
+
+            .features-section {
+                padding: 80px 0;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .feature-card {
+                padding: 30px 20px;
+            }
+
+            .feature-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
+                margin-bottom: 20px;
+            }
+
+            .cta-section {
+                padding: 80px 0;
+            }
+
+            .cta-title {
+                font-size: 2.5rem;
+                margin-bottom: 20px;
+            }
+
+            .cta-subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 35px;
+                padding: 0 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 10px;
+            }
+
+            .header-top {
+                padding: 10px 0;
+            }
+
+            .logo {
+                padding: 6px 12px;
+                border-radius: 30px;
+            }
+
+            .logo h1 {
+                font-size: 24px;
+            }
+
+            .logo-icon {
+                font-size: 24px;
+            }
+
+            .delivery-tag {
+                font-size: 11px;
+                padding: 8px 15px;
+            }
+
+            .nav-links {
+                gap: 12px;
+                padding: 12px 0;
+            }
+
+            .nav-links a {
+                font-size: 13px;
+                padding: 12px 22px;
+                min-height: 46px;
+            }
+
+            .hero-title {
+                font-size: 2.2rem;
+                margin-bottom: 15px;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                margin-bottom: 30px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .category-content {
+                padding: 12px;
+            }
+
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+
+            .cta-title {
+                font-size: 2rem;
+            }
+
+            .cta-subtitle {
+                font-size: 1rem;
+            }
+
+            .cta-btn {
+                padding: 15px 25px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <i class="fas fa-shopping-basket logo-icon"></i>
+                    <h1>Gmart</h1>
+                </div>
+              
+                <div class="header-actions">
+                    <a href="cake.html" class="action-btn primary">
+                        <i class="fas fa-birthday-cake"></i>
+                        <span>Shop Cakes</span>
+                        <div class="btn-glow"></div>
+                    </a>
+                    <a href="fruit.html" class="action-btn primary">
+                        <i class="fas fa-apple-alt"></i>
+                        <span>Shop Fruits</span>
+                        <div class="btn-glow"></div>
+                    </a>
+                    <a href="modern_bike_rental.html" class="action-btn secondary">
+                        <i class="fas fa-motorcycle"></i>
+                        <span>Bike Rental</span>
+                        <div class="btn-glow"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+       
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to Gmart</h1>
+                <p class="hero-subtitle">Your Premium Destination for Fresh Fruits & Luxury Groceries</p>
+                
+                <div class="cta-buttons">
+                    <a href="fruit.html" class="cta-btn">Shop Premium Fruits</a>
+                    <a href="#categories" class="cta-btn outline">Explore Collection</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="categories-section">
+        <div class="container">
+            <h2 class="section-title">Shop by Categories</h2>
+            
+            <div class="categories-grid">
+                <!-- Fruits Category -->
+                <a href="fruit.html" class="category-card fruits-card">
+                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1619566636858-adf3ef46400b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')">
+                        <div class="category-overlay"></div>
+                    </div>
+                    <div class="category-content">
+                        <i class="fas fa-apple-alt category-icon"></i>
+                        <h3 class="category-title">Premium Fresh Fruits</h3>
+                        <p class="category-description">Handpicked premium quality fresh fruits sourced from the finest orchards. Experience luxury in every bite with our exclusive collection.</p>
+                        <span class="category-status status-available">Available Now</span>
+                    </div>
+                </a>
+
+                <!-- Cake Category -->
+                <a href="cake.html" class="category-card fruits-card">
+                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')">
+                        <div class="category-overlay"></div>
+                    </div>
+                    <div class="category-content">
+                        <i class="fas fa-birthday-cake category-icon"></i>
+                        <h3 class="category-title">Fresh Cakes & Desserts</h3>
+                        <p class="category-description">Delicious fresh cakes, custom designs, and premium desserts for all occasions. Made with finest ingredients and delivered fresh.</p>
+                        <span class="category-status status-available">Available Now</span>
+                    </div>
+                </a>
+
+                <!-- Rental Bike Category -->
+                <a href="modern_bike_rental.html" class="category-card fruits-card">
+                    <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1950&q=80')">
+                        <div class="category-overlay"></div>
+                    </div>
+                    <div class="category-content">
+                        <i class="fas fa-motorcycle category-icon"></i>
+                        <h3 class="category-title">Bike Rentals</h3>
+                        <p class="category-description">Rent premium bikes for hourly or daily rides. Flexible pricing starting at just ₹100/hour with minimum 3-hour booking.</p>
+                        <span class="category-status status-available">Available Now</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose Gmart?</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="feature-title">100% Premium & Organic</h3>
+                    <p class="feature-description">Exclusively sourced organic produce from certified luxury farms, ensuring the highest quality and purity for our distinguished clientele.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3 class="feature-title">Express Luxury Delivery</h3>
+                    <p class="feature-description">White-glove delivery service with premium packaging and same-day express delivery options available for VIP members.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Premium Quality Guarantee</h3>
+                    <p class="feature-description">Luxury-grade quality assurance with personalized service, easy returns, and full satisfaction guarantee for our valued customers.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="feature-title">Concierge Support</h3>
+                    <p class="feature-description">Dedicated premium customer concierge available 24/7 to assist with personalized recommendations and VIP service.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Gmart</h3>
+                    <p>Your trusted partner for fresh fruits and groceries delivered with care and convenience.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="cake.html">Cakes</a></li>
+                        <li><a href="fruit.html">Fruits</a></li>
+                        <li><a href="#categories">Categories</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="pwa-install.html">Install App</a></li>
+                        <li><a href="qr-code.html">QR Code</a></li>
+                    </ul>
+                </div>
+                
+               
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +91 7974088441</li>
+                        <li><i class="fas fa-envelope"></i>gmart8348@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Gmart. All rights reserved. | <a href="privacy-policy.html#privacy">Privacy Policy</a> | <a href="privacy-policy.html#terms">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Coming soon notification
+        function showComingSoon() {
+            alert('🚀 Grocery section is coming soon! Stay tuned for amazing deals on daily essentials, vegetables, and household items. Meanwhile, check out our fresh fruits collection!');
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.15)';
+            } else {
+                header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+        
+        // Register service worker for PWA support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
